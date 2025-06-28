@@ -7,9 +7,19 @@ pipeline {
             }
             steps {
                 sh 'mvn --version'
-                // Compile the Java program
+                sh 'java --version'
+                
+                // Create the Java file inside the container
+                sh """
+                echo 'public class HelloWorld {
+                    public static void main(String[] args) {
+                        System.out.println("Hello, World from Java!");
+                    }
+                }' > HelloWorld.java
+                """
+
+                // Compile and run the Java file
                 sh 'javac HelloWorld.java'
-                // Run the compiled Java program
                 sh 'java HelloWorld'
             }
         }
